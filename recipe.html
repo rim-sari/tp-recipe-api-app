@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la recette</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/style.css">
+</head>
+<body>
+    
+    <script src="script.js"></script>
+    <script>
+        // Récupérer l'ID de la recette depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = urlParams.get('id');
+
+        async function fetchRecipeDetails(id) {
+            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+            const data = await response.json();
+            return data.meals[0];
+        }
+
+        async function displayRecipeDetails() {
+            const recipe = await fetchRecipeDetails(recipeId);
+            const recipeDetails = document.getElementById('recipeDetails');
+
+            recipeDetails.innerHTML = `
+                <h2>${recipe.strMeal}</h2>
+                <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" class="img-fluid">
+                <h3>Ingrédients</h3>
+                <ul>
+                    ${Array.from({ length: 20 }).map((_, i) => {
+                        const ingredient = recipe[`strIngredient${i + 1}`];
+                        const measure = recipe[`strMeasure${i + 1}`];
+                        return ingredient && measure ? `<li>${ingredient}: ${measure}</li>` : '';
+                    }).join('')}
+                </ul>
+                <h3>Instructions</h3>
+                <p>${recipe.strInstructions}</p>
+            `;
+        }
+
+        // Fonction pour revenir à la page précédente
+        function goBack() {
+            window.history.back(); // Revient à la dernière page visitée
+        }
+
+        displayRecipeDetails();
+    </script>
+
+    <!-- Barre de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <!-- Titre de la navbar aligné à gauche -->
+        <a class="navbar-brand" href="#">Site de Recettes</a>
+        
+        <!-- Liste des éléments de la navbar -->
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto"> <!-- ms-auto retiré pour aligner à gauche -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./recherche.html">Rechercher une recette</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./pays.html">Recherche par pays</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="container">
+        <!-- Bouton Retour -->
+        <button class="btn btn-secondary my-4" onclick="goBack()">Retour</button>
+
+        <h1 class="my-4 text-center">Détails de la recette</h1>
+        <div id="recipeDetails"></div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+/* assets/styles/style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1, h3 {
+    color: #007bff;
+}
+
+/* Aligner les éléments de la navbar à gauche */
+.navbar-nav {
+    margin-left: 0; /* Aligner à gauche */
+}
+
+.navbar-nav .nav-item {
+    margin-right: 15px; /* Ajouter de l'espace entre les éléments */
+}
+
+/* Supprimer tout alignement automatique */
+.navbar-collapse {
+    display: flex;
+    justify-content: flex-start; /* Aligner les éléments à gauche */
+}
+
+#home {
+    text-align: center;
+}
+
+#search, #countries {
+    margin-top: 30px;
+}
+
+#search input {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.recipe-card {
+    margin-bottom: 20px;
+}
+
+.recipe-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.recipe-card .card-body {
+    text-align: center;
+}
+
+.recipe-card .btn {
+    margin-top: 10px;
+}
+
+
